@@ -10,5 +10,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * <p>date: 2024/3/19
  **/
 public interface UserRepository extends JpaRepository<User, String> {
-
+    User findByUsernameAndPasswordAndLocked(String username, String password, Integer locked);
+    User findByUsernameOrPhone(String username, String phone);
 }

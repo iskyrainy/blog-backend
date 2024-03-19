@@ -1,7 +1,35 @@
 spring:
   datasource:
+    url: jdbc:mysql://47.116.126.241:3316/blog
+    username: root
+    password: 123456
     druid:
-      driver: com.mysql.cj.jdbc.Driver
-      url: jdbc:mysql://47.116.126.241:3316/blog
-      username: root
+      max-wait: 60000
+      max-active: 30
+      min-idle: 10
+      initial-size: 5
+      connectTimeout: 60000
+      socketTimeout: 60000
+      timeBetweenEvictionRunsMillis: 60000
+    type: com.alibaba.druid.pool.DruidDataSource
+
+  jpa:
+    open-in-view: true
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+  data:
+    redis:
+      host: 47.116.126.241
+      port: 6389
+      jedis:
+        pool:
+          max-active: 20
+          max-wait: 1000
+          max-idle: 5
+      database: 0
       password: 123456
+server:
+  port: 20000
+  servlet:
+    context-path: /blog
