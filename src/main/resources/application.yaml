@@ -1,0 +1,7 @@
+spring:
+  datasource:
+    druid:
+      driver: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://47.116.126.241:3316/blog
+      username: root
+      password: 123456
