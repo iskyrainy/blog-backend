@@ -5,6 +5,7 @@ import com.example.bb.enums.CodeEnum;
 import com.example.bb.exception.BlogException;
 import com.example.bb.form.UserForm;
 import com.example.bb.service.UserService;
+import com.example.bb.utils.ArgonUtil;
 import com.example.bb.utils.ResultVOUtil;
 import com.example.bb.vo.ResultVO;
 import jakarta.annotation.Resource;
@@ -56,10 +57,10 @@ public class UserController {
                 throw new BlogException(CodeEnum.PARAM_ERROR);
             }
             User user = new User();
-            user.setUsername(userForm.getUsername());
-            user.setPassword(userForm.getPassword());
             user.setTypeId(userForm.getTypeId());
             user.setPhone(userForm.getPhone());
+            user.setUsername(userForm.getUsername());
+            user.setPassword(ArgonUtil.encode(userForm.getPassword()));
             String register = userService.register(user);
             if (register == null)
                 return ResultVOUtil.error("user has been registered", null);
