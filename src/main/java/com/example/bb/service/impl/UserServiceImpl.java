@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
             return null;
         else {
             String token = UUIDUtil.randomUUIDStrWithoutDash();
-            RedisTemplate<String, Object> template = RedisUtil.getTemplate();
+            RedisTemplate<String, Object> template = RedisUtil.getRedisTemplate();
             template.opsForValue().set(token, r.getId(), TokenConstant.expire, TimeUnit.SECONDS);
             return token;
         }
@@ -43,10 +43,7 @@ public class UserServiceImpl implements UserService {
         if (r == null) {
             user.setLocked(0);
             r = userRepository.save(user);
-            String token = UUIDUtil.randomUUIDStrWithoutDash();
-            RedisTemplate<String, Object> template = RedisUtil.getTemplate();
-            template.opsForValue().set(token, r.getId(), TokenConstant.expire, TimeUnit.SECONDS);
-            return token;
+            return r.getUsername();
         } else
             return null;
     }

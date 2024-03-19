@@ -39,7 +39,7 @@ public class UserController {
             }
             User user = new User();
             user.setUsername(userForm.getUsername());
-            user.setPassword(user.getPassword());
+            user.setPassword(userForm.getPassword());
             String token = userService.login(user);
             return ResultVOUtil.success(token);
         } catch (BlogException e) {

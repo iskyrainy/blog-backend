@@ -3,7 +3,6 @@ package com.example.bb.aspect;
 import com.example.bb.constant.TokenConstant;
 import com.example.bb.enums.CodeEnum;
 import com.example.bb.exception.BlogAuthException;
-import com.example.bb.exception.BlogException;
 import com.example.bb.utils.CookieUtil;
 import com.example.bb.utils.RedisUtil;
 import jakarta.servlet.http.Cookie;
@@ -40,7 +39,7 @@ public class BlogAuthAspect {
                 log.warn("can not get token info!");
                 throw new BlogAuthException(CodeEnum.TOKEN_NOT_FOUND);
             } else {
-                RedisTemplate<String, Object> template = RedisUtil.getTemplate();
+                RedisTemplate<String, Object> template = RedisUtil.getRedisTemplate();
                 Boolean exist = template.hasKey(cookie.getValue());
                 if (exist == null || !exist) {
                     log.warn("login expired!");
