@@ -1,14 +1,18 @@
 package com.example.bb.controller;
 
+import com.example.bb.constant.TokenConstant;
 import com.example.bb.dataobject.User;
 import com.example.bb.enums.CodeEnum;
 import com.example.bb.exception.BlogException;
 import com.example.bb.form.UserForm;
 import com.example.bb.service.UserService;
 import com.example.bb.utils.ArgonUtil;
+import com.example.bb.utils.CookieUtil;
 import com.example.bb.utils.ResultVOUtil;
 import com.example.bb.vo.ResultVO;
 import jakarta.annotation.Resource;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -42,6 +46,8 @@ public class UserController {
             user.setUsername(userForm.getUsername());
             user.setPassword(userForm.getPassword());
             String token = userService.login(user);
+            if (token == null)
+                return ResultVOUtil.error("login error: user is locked or password not correct!", null);
             return ResultVOUtil.success(token);
         } catch (BlogException e) {
             return ResultVOUtil.error(e.getMessage(), null);
@@ -66,6 +72,24 @@ public class UserController {
                 return ResultVOUtil.error("user has been registered", null);
             else
                 return ResultVOUtil.success(register);
+        } catch (BlogException e) {
+            return ResultVOUtil.error(e.getMessage(), null);
+        }
+    }
+
+    @PostMapping(value = "/logout")
+    public ResultVO<String> logout(@Validated @RequestBody UserForm userForm,
+                                   BindingResult result,
+                                   HttpServletRequest request) {
+        try {
+            if (result.hasErrors()) {
+                log.info("PARAMS ERROR: {}", userForm.toString());
+                throw new BlogException(CodeEnum.PARAM_ERROR);
+            }
+            User user = new User();
+            user.setUsername(userForm.getUsername());
+            Cookie token = CookieUtil.get(request, TokenConstant.TOKEN);
+            return ResultVOUtil.success(userService.logout(token), null);
         } catch (BlogException e) {
             return ResultVOUtil.error(e.getMessage(), null);
         }

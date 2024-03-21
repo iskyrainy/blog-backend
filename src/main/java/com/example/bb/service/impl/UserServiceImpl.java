@@ -8,6 +8,7 @@ import com.example.bb.utils.ArgonUtil;
 import com.example.bb.utils.RedisUtil;
 import com.example.bb.utils.UUIDUtil;
 import jakarta.annotation.Resource;
+import jakarta.servlet.http.Cookie;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
@@ -48,5 +49,13 @@ public class UserServiceImpl implements UserService {
             return r.getUsername();
         } else
             return null;
+    }
+
+    @Override
+    public String logout(Cookie cookie) {
+        String token = cookie.getValue();
+        RedisTemplate<String, Object> template = RedisUtil.getRedisTemplate();
+        template.delete(token);
+        return "logout success";
     }
 }
