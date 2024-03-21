@@ -22,6 +22,8 @@ public class StartServiceImpl implements StartService {
     @Override
     public void initApplication() {
         RedisTemplate<String, Object> template = RedisUtil.getRedisTemplate();
+        if (Boolean.TRUE.equals(template.hasKey("AL")))
+            template.delete("AL");
         userTypeRepository.findAll().forEach(o -> template.opsForList().leftPush("AL", o));
     }
 }

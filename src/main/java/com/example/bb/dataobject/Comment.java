@@ -24,19 +24,19 @@ import java.util.Date;
 public class Comment {
     @GeneratedValue(strategy = GenerationType.UUID)
     @Id
-    @Column(name = "id")
+    @Column(name = "id", columnDefinition = "varchar(20) not null")
     private String id;
 
-    @Column(name = "host_id")
+    @Column(name = "host_id", columnDefinition = "varchar(20) not null")
     private String hostId;
 
-    @Column(name = "blog_id")
+    @Column(name = "blog_id", columnDefinition = "varchar(20) not null")
     private String blogId;
 
-    @Column(name = "content")
+    @Column(name = "content", columnDefinition = "blob")
     private String content;
 
     @CreatedDate
-    @Column(name = "create_date")
+    @Column(name = "create_date", nullable = false)
     private Date createDate;
 }

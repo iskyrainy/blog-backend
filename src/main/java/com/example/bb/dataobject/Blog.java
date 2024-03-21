@@ -25,16 +25,16 @@ import java.util.Date;
 public class Blog {
     @GeneratedValue(strategy = GenerationType.UUID)
     @Id
-    @Column(name = "id")
+    @Column(name = "id", columnDefinition = "varchar(20) not null")
     private String id;
 
-    @Column(name = "title")
+    @Column(name = "title", columnDefinition = "varchar(255) not null")
     private String title;
 
-    @Column(name = "host_id")
+    @Column(name = "host_id", columnDefinition = "varchar(20) not null")
     private String hostId;
 
-    @Column(name = "content")
+    @Column(name = "content", columnDefinition = "blob")
     private String content;
 
     @CreatedDate

@@ -25,16 +25,16 @@ import java.util.Date;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "id")
+    @Column(name = "id", columnDefinition = "varchar(20) not null")
     private String id;
 
-    @Column(name = "username")
+    @Column(name = "username", columnDefinition = "varchar(20) not null")
     private String username;
 
-    @Column(name = "password")
+    @Column(name = "password", columnDefinition = "varchar(20) not null")
     private String password;
 
-    @Column(name = "phone")
+    @Column(name = "phone", columnDefinition = "varchar(20) not null")
     private String phone;
 
     @Column(name = "type_id")

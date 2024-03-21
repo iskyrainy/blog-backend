@@ -4,19 +4,19 @@ import com.example.bb.annotation.ReflectionCheck;
 import lombok.Data;
 
 /**
- * <p>className: com.example.bb.form-UserForm
+ * <p>className: com.example.bb.form-BlogForm
  * <p>description:
  * <p>author: wn
- * <p>date: 2024/3/19
+ * <p>date: 2024/3/21
  **/
 @Data
-public class UserForm {
+public class BlogForm {
     @ReflectionCheck(index = 1)
-    private String username;
+    private String id;
     @ReflectionCheck(index = 2)
-    private String password;
+    private String title;
     @ReflectionCheck(index = 3)
-    private String phone;
+    private String hostId;
     @ReflectionCheck(index = 4)
-    private int typeId;
+    private String content;
 }

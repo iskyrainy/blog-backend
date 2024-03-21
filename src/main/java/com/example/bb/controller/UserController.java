@@ -39,7 +39,7 @@ public class UserController {
                                   BindingResult result) {
         try {
             if (result.hasErrors()) {
-                log.info("PARAMS ERROR: {}", userForm.toString());
+                log.error("PARAMS ERROR: {}", userForm.toString());
                 throw new BlogException(CodeEnum.PARAM_ERROR);
             }
             User user = new User();
@@ -59,7 +59,7 @@ public class UserController {
                                      BindingResult result) {
         try {
             if (result.hasErrors()) {
-                log.info("PARAMS ERROR: {}", userForm.toString());
+                log.error("PARAMS ERROR: {}", userForm.toString());
                 throw new BlogException(CodeEnum.PARAM_ERROR);
             }
             User user = new User();
@@ -83,7 +83,7 @@ public class UserController {
                                    HttpServletRequest request) {
         try {
             if (result.hasErrors()) {
-                log.info("PARAMS ERROR: {}", userForm.toString());
+                log.error("PARAMS ERROR: {}", userForm.toString());
                 throw new BlogException(CodeEnum.PARAM_ERROR);
             }
             User user = new User();

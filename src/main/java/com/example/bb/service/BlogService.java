@@ -7,4 +7,5 @@ package com.example.bb.service;
  * <p>date: 2024/3/20
  **/
 public interface BlogService {
+
 }
