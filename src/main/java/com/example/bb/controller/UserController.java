@@ -8,14 +8,14 @@ import com.example.bb.form.UserForm;
 import com.example.bb.service.UserService;
 import com.example.bb.utils.ArgonUtil;
 import com.example.bb.utils.CookieUtil;
+import com.example.bb.utils.ReflectionCheckUtil;
 import com.example.bb.utils.ResultVOUtil;
 import com.example.bb.vo.ResultVO;
+import com.example.bb.vo.UserVO;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -35,10 +35,9 @@ public class UserController {
     UserService userService;
 
     @PostMapping(value = "login")
-    public ResultVO<String> login(@Validated @RequestBody UserForm userForm,
-                                  BindingResult result) {
+    public ResultVO<UserVO> login(@RequestBody UserForm userForm) {
         try {
-            if (result.hasErrors()) {
+            if (ReflectionCheckUtil.paramCheck(userForm, 1, 2)) {
                 log.error("PARAMS ERROR: {}", userForm.toString());
                 throw new BlogException(CodeEnum.PARAM_ERROR);
             }
@@ -48,17 +47,18 @@ public class UserController {
             String token = userService.login(user);
             if (token == null)
                 return ResultVOUtil.error("login error: user is locked or password not correct!", null);
-            return ResultVOUtil.success(token);
+            UserVO userVO = new UserVO();
+            userVO.setToken(token);
+            return ResultVOUtil.success(userVO);
         } catch (BlogException e) {
             return ResultVOUtil.error(e.getMessage(), null);
         }
     }
 
     @PostMapping(value = "/register")
-    public ResultVO<String> register(@Validated @RequestBody UserForm userForm,
-                                     BindingResult result) {
+    public ResultVO<String> register(@RequestBody UserForm userForm) {
         try {
-            if (result.hasErrors()) {
+            if (ReflectionCheckUtil.paramCheck(userForm, 1, 2, 3, 4)) {
                 log.error("PARAMS ERROR: {}", userForm.toString());
                 throw new BlogException(CodeEnum.PARAM_ERROR);
             }
@@ -78,16 +78,8 @@ public class UserController {
     }
 
     @PostMapping(value = "/logout")
-    public ResultVO<String> logout(@Validated @RequestBody UserForm userForm,
-                                   BindingResult result,
-                                   HttpServletRequest request) {
+    public ResultVO<String> logout(HttpServletRequest request) {
         try {
-            if (result.hasErrors()) {
-                log.error("PARAMS ERROR: {}", userForm.toString());
-                throw new BlogException(CodeEnum.PARAM_ERROR);
-            }
-            User user = new User();
-            user.setUsername(userForm.getUsername());
             Cookie token = CookieUtil.get(request, TokenConstant.TOKEN);
             return ResultVOUtil.success(userService.logout(token), null);
         } catch (BlogException e) {

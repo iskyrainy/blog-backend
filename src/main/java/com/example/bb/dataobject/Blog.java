@@ -34,7 +34,7 @@ public class Blog {
     @Column(name = "host_id", columnDefinition = "varchar(20) not null")
     private String hostId;
 
-    @Column(name = "content", columnDefinition = "blob")
+    @Column(name = "content", columnDefinition = "text")
     private String content;
 
     @CreatedDate

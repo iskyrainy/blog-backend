@@ -33,7 +33,7 @@ public class Comment {
     @Column(name = "blog_id", columnDefinition = "varchar(20) not null")
     private String blogId;
 
-    @Column(name = "content", columnDefinition = "blob")
+    @Column(name = "content", columnDefinition = "varchar(255)")
     private String content;
 
     @CreatedDate

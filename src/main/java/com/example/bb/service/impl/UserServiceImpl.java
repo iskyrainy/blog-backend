@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
         if (ArgonUtil.verify(user.getPassword(), r.getPassword())) {
             String token = UUIDUtil.randomUUIDStrWithoutDash();
             RedisTemplate<String, Object> template = RedisUtil.getRedisTemplate();
-            template.opsForValue().set(token, r.getId(), TokenConstant.expire, TimeUnit.SECONDS);
+            template.opsForValue().set(token, r, TokenConstant.expire, TimeUnit.SECONDS);
             return token;
         }
         return null;
