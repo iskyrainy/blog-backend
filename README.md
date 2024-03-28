@@ -6,18 +6,18 @@ This project is used for g-blog's backend.
 
 1. Clone project to local space;
     ```shell
-        git clone git@gitlab.com:dev-projects3414113/blog-backend.git
+    git clone git@gitlab.com:dev-projects3414113/blog-backend.git
     ```
 2. Open project and configure project within java17+ and maven;
 3. Configure database(mysql/redis), modify local ip and port;
 4. Deploy;
     ```shell
-        mvn clean package -Dmaven.test.skip=true
-        # deploy directly or nginx
-        nohup java -jar [path to jar] &
-        # deploy tomcat
-        mv [path to war] [path to tomcat service]
-        sh restart.sh
+    mvn clean package -Dmaven.test.skip=true
+    # deploy directly or nginx
+    nohup java -jar [path to jar] &
+    # deploy tomcat
+    mv [path to war] [path to tomcat service]
+    sh restart.sh
     ```
 
 # Editing this README
