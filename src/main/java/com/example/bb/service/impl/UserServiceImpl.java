@@ -46,7 +46,7 @@ public class UserServiceImpl implements UserService {
         if (r == null) {
             user.setLocked(0);
             r = userRepository.save(user);
-            return r.getUsername();
+            return r.getId();
         } else
             return null;
     }

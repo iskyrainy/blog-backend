@@ -1,6 +1,7 @@
 package com.example.bb.vo;
 
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 /**
  * <p>className: com.example.bb.vo-UserVO
@@ -9,6 +10,7 @@ import lombok.Data;
  * <p>date: 2024/3/24
  **/
 @Data
+@Accessors(chain = true)
 public class UserVO {
     private String id;
     private String username;

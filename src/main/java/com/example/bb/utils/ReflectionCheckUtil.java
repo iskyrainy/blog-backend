@@ -1,6 +1,8 @@
 package com.example.bb.utils;
 
 import com.example.bb.annotation.ReflectionCheck;
+import com.example.bb.enums.CodeEnum;
+import com.example.bb.exception.BlogException;
 import jakarta.validation.constraints.NotNull;
 import lombok.extern.slf4j.Slf4j;
 
@@ -43,28 +45,34 @@ public final class ReflectionCheckUtil {
         return clazz;
     }
 
-    public static boolean paramCheck(@NotNull Object o, int... ints) {
+    public static void paramCheck(@NotNull Object o, int... ints) {
         init(o);
         Set<Integer> set = new HashSet<>();
         for (int i : ints)
             set.add(i);
-        return paramCheck(o ,set);
+        paramCheck(o ,set);
     }
 
-    public static boolean paramCheck(@NotNull Object o, Set<Integer> set) {
+    public static void paramCheck(@NotNull Object o, Set<Integer> set) {
         init(o);
+        boolean f = true;
         try {
             for (Field field : clazz.getFields()) {
                 field.setAccessible(true);
                 if (set.contains(field.getAnnotation(ReflectionCheck.class).index())) {
-                    if (field.get(o) == null)
-                        return false;
+                    if (field.get(o) == null) {
+                        f = false;
+                        break;
+                    }
                 }
             }
         } catch (IllegalAccessException e) {
             log.error(e.getMessage());
-            return false;
+            f = false;
         }
-        return true;
+        if (!f) {
+            log.error("PARAMS ERROR: {}", o.toString());
+            throw new BlogException(CodeEnum.PARAM_ERROR);
+        }
     }
 }
